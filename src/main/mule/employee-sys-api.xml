@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+		xmlns:db="http://www.mulesoft.org/schema/mule/db"
+		xmlns:http="http://www.mulesoft.org/schema/mule/http"
+		xmlns="http://www.mulesoft.org/schema/mule/core"
+		xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+	<flow name="employee-appFlow"
+		doc:id="33c02c93-d373-41a2-9a41-70026459e2bd">
+		<http:listener doc:name="GET /employee"
+			doc:id="8b2b7c92-76b3-4232-b662-438f1c06ac3a"
+			path="/employee" config-ref="HTTP_Global-Listener"/>
+			
+		<set-variable
+			value="#[attributes.queryParams.gender default 'Male']"
+			doc:name="gender" doc:id="3eef89f5-214c-4b9d-86bc-d51a4022dbb4"
+			variableName="gender" />
+			
+		<try doc:name="Try" doc:id="d5fed956-6c06-4345-92cc-e3d6f03972cd" >
+			<db:select doc:name="Select Employees" doc:description="Filtering employees by gender" doc:id="fb75b3b9-2866-4813-b550-7665eca1a421" config-ref="DBConn-MySQL-trainingdb">
+			<db:sql><![CDATA[select * from employeetbl where gender = :gender]]></db:sql>
+			<db:input-parameters><![CDATA[#[{
+	gender: vars.gender
+}]]]></db:input-parameters>
+		</db:select>
+			<ee:transform doc:name="DW Java2JSON" doc:id="56142b95-1363-415f-bb57-71aa9c7b1387">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	payload: payload,
+	size: sizeOf(payload)
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			<error-handler >
+				<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="1b9db6ff-e07b-4c0b-bb11-4263d8e88aab" >
+					<set-payload value='#[{messageResponse: "The database is not working"}]' doc:name="Set Payload" doc:id="b867ca88-1697-4bd6-a7f7-7f824ff42522" />
+					<ee:transform doc:name="Transform Message" doc:id="3a01b409-d05a-4735-a2cf-79ed371355e4" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+				</on-error-continue>
+			</error-handler>
+		</try>
+		<logger level="INFO" doc:name="LOG Employee Payload"
+			doc:id="49d26601-bf61-4ae1-90c5-6c21ebc0fd0a" message="#[payload]" />
+			
+	</flow>
+</mule>

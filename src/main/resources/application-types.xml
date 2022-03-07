@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="employeeArr" format="json">
+      <types:shape format="weave" example="examples/employeePayload.json"><![CDATA[%dw 2.0
+
+type employeeArr = Array<{|  country: String,   role: String,   address: String,   gender: String,   city: String,   name: String,   id: Number {"typeId": "int"},   age: Number {"typeId": "int"},   lastname: String|}> {"example": "[{\\\"country\\\":\\\"Mexico\\\",\\\"role\\\":\\\"Lead Engineer\\\",\\\"address\\\":\\\"Selene 500, satelite\\\",\\\"gender\\\":\\\"Male\\\",\\\"city\\\":\\\"Oaxaca\\\",\\\"name\\\":\\\"Everardo\\\",\\\"id\\\":1,\\\"age\\\":29,\\\"lastname\\\":\\\"Flores\\\"},{\\\"country\\\":\\\"Mexico\\\",\\\"role\\\":\\\"Tester Jr\\\",\\\"address\\\":\\\"Selene 500, satelite\\\",\\\"gender\\\":\\\"Male\\\",\\\"city\\\":\\\"Oaxaca\\\",\\\"name\\\":\\\"Jhon\\\",\\\"id\\\":2,\\\"age\\\":20,\\\"lastname\\\":\\\"Eugenio\\\"}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+</types:mule>

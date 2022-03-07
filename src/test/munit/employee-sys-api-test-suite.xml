@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="employee-sys-api-test-suite.xml" />
+	<munit:after-suite name="employee-sys-api-test-suiteAfter_Suite" doc:id="6bf3eb00-69c2-408e-b658-cf3dec67a673" >
+		<logger level="INFO" doc:name="Logger" doc:id="2a0ced7e-c9ef-474b-aa38-32ba08d45609" message="***After Suite***"/>
+	</munit:after-suite>
+	<munit:after-test name="employee-sys-api-test-suiteAfter_Test" doc:id="4b995ef2-8d79-48dc-8f2b-d05a3bab5606" >
+		<logger level="INFO" doc:name="Logger" doc:id="0517ba1a-d43c-448b-b792-b8ed673cd847" message="***After Test***"/>
+	</munit:after-test>
+	<munit:before-suite name="employee-sys-api-test-suiteBefore_Suite" doc:id="1ee68820-36a6-4b27-9d57-d9b5b1f08c9e" >
+		<logger level="INFO" doc:name="Logger" doc:id="76a46377-e77a-4c0a-87db-342391597620" message="****Before Suite****"/>
+	</munit:before-suite>
+	<munit:before-test name="employee-sys-api-test-suiteBefore_Test" doc:id="23f8f3dc-b24a-41bb-8104-2fd119fbd0a6" >
+		<logger level="INFO" doc:name="Logger" doc:id="332968d6-28d5-4e90-9e64-aa45526d561c" message="*****Before Test****"/>
+	</munit:before-test>
+	<munit:test name="employee-sys-api-test-suiteTest" doc:id="bc438258-a872-493a-9bb5-6a2a140e7484" >
+		<munit:behavior >
+			<logger level="INFO" doc:name="Logger" doc:id="3f553206-0a9c-4169-b3ae-4e47ada46759" message="&gt;&gt;In Behavior&lt;&lt;"/>
+		</munit:behavior>
+	</munit:test>
+	<munit:test name="employee-sys-api-test-suite-employee-appFlowTest" doc:id="f9063bd5-7fa2-4fb6-84fa-efe455d222de" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="cf1ec83a-47db-4135-b9f8-216d18bd3c12" processor="db:select">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Select Employees" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="Filtering employees by gender" attributeName="doc:description" />
+					<munit-tools:with-attribute whereValue="fb75b3b9-2866-4813-b550-7665eca1a421" attributeName="doc:id" />
+					<munit-tools:with-attribute whereValue="DBConn-MySQL-trainingdb" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value='#[[&#10;    {&#10;        "country": "Mock WHEN - Mexico",&#10;        "role": "Mock WHEN - Lead Engineer",&#10;        "address": "Mock WHEN - Selene 500, satelite",&#10;        "gender": "Mock WHEN - Male",&#10;        "city": "Mock WHEN - Oaxaca",&#10;        "name": "Mock WHEN - Everardo",&#10;        "id": 1,&#10;        "age": 29,&#10;        "lastname": "Mock WHEN - Flores"&#10;    },&#10;    {&#10;        "country": "Mock WHEN - Mexico",&#10;        "role": "Mock WHEN - Tester Jr",&#10;        "address": "Mock WHEN - Selene 500, satelite",&#10;        "gender": "Mock WHEN - Male",&#10;        "city": "Mock WHEN - Oaxaca",&#10;        "name": "Mock WHEN - Jhon",&#10;        "id": 2,&#10;        "age": 20,&#10;        "lastname": "Mock WHEN - Eugenio"&#10;    }&#10;]]' />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="3711f9f3-d2dc-4c15-8b5d-d3c8b12025bf" >
+				<munit:attributes value='#[ { "queryParams": {"gender": "Female"}}]' />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to employee-appFlow" doc:id="3fa39352-40d1-477a-b0c3-2c2f9a9bd4a2" name="employee-appFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="f6d11a94-1c74-4ddd-aaf8-3bb8d9e44bb9" is="#[MunitTools::notNullValue()]" message='The select result is null' expression="#[payload.payload]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

@@ -1,0 +1,24 @@
+[
+    {
+        "country": "Mexico",
+        "role": "Lead Engineer",
+        "address": "Selene 500, satelite",
+        "gender": "Male",
+        "city": "Oaxaca",
+        "name": "Everardo",
+        "id": 1,
+        "age": 29,
+        "lastname": "Flores"
+    },
+    {
+        "country": "Mexico",
+        "role": "Tester Jr",
+        "address": "Selene 500, satelite",
+        "gender": "Male",
+        "city": "Oaxaca",
+        "name": "Jhon",
+        "id": 2,
+        "age": 20,
+        "lastname": "Eugenio"
+    }
+]

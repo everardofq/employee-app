@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+		xmlns:http="http://www.mulesoft.org/schema/mule/http"
+		xmlns:db="http://www.mulesoft.org/schema/mule/db"
+		xmlns="http://www.mulesoft.org/schema/mule/core"
+		xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+
+	<db:config name="DBConn-MySQL-trainingdb"
+		doc:name="Database Config"
+		doc:id="46f588ec-6728-4829-a89b-9c0a2775a764">
+		<db:my-sql-connection host="${trainingDB.host}"
+			port="${trainingDB.port}" user="${secure::trainingDB.user}"
+			password="${secure::trainingDB.password}" database="${secure::trainingDB.database}" />
+	</db:config>
+	
+	<http:listener-config name="HTTP_Global-Listener"
+		doc:name="HTTP Listener config"
+		doc:id="6a34938c-5a22-428f-9081-3234469852df">
+		<http:listener-connection host="0.0.0.0"
+			port="8081" />
+	</http:listener-config>
+	
+	<configuration-properties
+		doc:name="Configuration properties"
+		doc:id="0fb8fb4e-9dd9-4a49-abf0-a454d4b2c89a"
+		file="apisero-employee-sys-api-secure-dev.properties" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="8feab3e9-6c06-4abd-8563-1bdab5cc6afc" file="apisero-employee-sys-api-secure-dev.properties" key="${token}" />
+		
+</mule>
