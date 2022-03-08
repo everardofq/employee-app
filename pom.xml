@@ -37,6 +37,22 @@
 							<artifactId>mysql-connector-java</artifactId>
 						</sharedLibrary>
 					</sharedLibraries>
+					<cloudHubDeployment>
+				    	<uri>https://anypoint.mulesoft.com</uri>
+				      	<muleVersion>4.4.0</muleVersion>
+				      	<!-- server>AnypointSandbox</server> -->
+				      	<username>${PLATFORM_USERNAME}</username>
+				      	<password>${PLATFORM_PASSWORD}</password>
+				      	<applicationName>circleci-employee-app</applicationName>
+				      	<environment>Sandbox</environment>
+				      	<region>us-east-1</region>
+				      	<workers>1</workers>
+				      	<objectStoreV2>true</objectStoreV2>
+				      	<workerType>MICRO</workerType>
+				      	<properties>
+				        	<key>value</key>
+				      	</properties>
+				    </cloudHubDeployment>
 				</configuration>
 			</plugin>
 			<plugin>
