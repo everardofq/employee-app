@@ -29,6 +29,6 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 		doc:name="Configuration properties"
 		doc:id="0fb8fb4e-9dd9-4a49-abf0-a454d4b2c89a"
 		file="apisero-employee-sys-api-secure-dev.properties" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="8feab3e9-6c06-4abd-8563-1bdab5cc6afc" file="apisero-employee-sys-api-secure-dev.properties" key="${token}" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="8feab3e9-6c06-4abd-8563-1bdab5cc6afc" file="apisero-employee-sys-api-secure-dev.properties" key="${MASTER_KEY}" />
 		
 </mule>
