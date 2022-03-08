@@ -40,7 +40,6 @@
 					<cloudHubDeployment>
 				    	<uri>https://anypoint.mulesoft.com</uri>
 				      	<muleVersion>4.4.0</muleVersion>
-				      	<!-- server>AnypointSandbox</server> -->
 				      	<username>${PLATFORM_USERNAME}</username>
 				      	<password>${PLATFORM_PASSWORD}</password>
 				      	<applicationName>circleci-employee-app</applicationName>
