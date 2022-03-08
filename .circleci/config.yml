@@ -9,7 +9,7 @@ jobs:
         steps:
             - checkout
             - run: mvn clean
-            - run: mvn test -s settings.xml
-            - run: mvn package -s settings.xml
-            - run: mvn install -s settings.xml
-            - run: mvn deploy -DmuleDeploy -s settings.xml
+            - run: mvn test
+            - run: mvn package
+            - run: mvn install
+            - run: mvn deploy -DmuleDeploy
