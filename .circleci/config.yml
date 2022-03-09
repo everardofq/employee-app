@@ -11,4 +11,4 @@ jobs:
             - run: mvn clean
             - run: mvn package
             - run: mvn install
-            - run: mvn deploy -DmuleDeploy -DMASTER_KEY=${MY_MASTER_KEY}
+            - run: mvn deploy -DmuleDeploy
